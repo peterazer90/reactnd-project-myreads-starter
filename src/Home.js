@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getAll} from "./BooksAPI";
+import {getAll, update} from "./BooksAPI";
 import CardBook from "./Components/CardBook";
 
 class Home extends Component {
@@ -9,6 +9,10 @@ class Home extends Component {
 
     componentDidMount() {
         getAll().then(books => this.setState({books}))
+    }
+
+    onSelect = (book, {target}) => {
+        update(book, target.value).then(response => console.log(response))
     }
 
     render() {
@@ -26,7 +30,11 @@ class Home extends Component {
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
                                     {books.map(book => book.shelf === "currentlyReading" &&
-                                        <CardBook key={book.id} book={book}/>
+                                        <CardBook
+                                            key={book.id}
+                                            book={book}
+                                            onSelect={this.onSelect}
+                                        />
                                     )}
                                 </ol>
                             </div>
@@ -36,7 +44,11 @@ class Home extends Component {
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
                                     {books.map(book => book.shelf === "wantToRead" &&
-                                        <CardBook key={book.id} book={book}/>
+                                        <CardBook
+                                            key={book.id}
+                                            book={book}
+                                            onSelect={this.onSelect}
+                                        />
                                     )}
                                 </ol>
                             </div>
@@ -46,7 +58,11 @@ class Home extends Component {
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
                                     {books.map(book => book.shelf === "read" &&
-                                        <CardBook key={book.id} book={book}/>
+                                        <CardBook
+                                            key={book.id}
+                                            book={book}
+                                            onSelect={this.onSelect}
+                                        />
                                     )}
                                 </ol>
                             </div>

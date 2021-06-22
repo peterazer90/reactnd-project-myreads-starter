@@ -4,16 +4,23 @@ import CardBook from "./Components/CardBook";
 
 class Search extends Component {
     state = {
-        results: []
+        results: [],
+        error: false,
     }
     onSearch = ({target}) => {
-        if (target.value) search(target.value).then((results) => this.setState({results}));
-        else this.setState({results: []});
+        if (target.value) search(target.value)
+            .then((results) => {
+                if (results.error) {
+                    this.setState({error: true, results: []})
+                } else this.setState({error: false, results})
+                console.log(results)
+            })
+        else this.setState({results: [], error: false});
     }
 
     render() {
         const {history} = this.props;
-        const {results} = this.state;
+        const {results, error} = this.state;
         return (
             <div className="search-books">
                 <div className="search-books-bar">
@@ -23,6 +30,7 @@ class Search extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
+                    {error && <p>No Result Found.</p>}
                     <ol className="books-grid">
                         {results.map(item =>
                             <CardBook

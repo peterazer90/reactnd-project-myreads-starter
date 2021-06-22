@@ -10,12 +10,9 @@ class CardBook extends Component {
         get(this.state.book.id).then(book => this.setState({book}))
     }
 
-    onSelect = (book, {target}) => {
-        update(book, target.value).then(response => console.log(response))
-    }
-
     render() {
         const {imageLinks, title, authors, shelf} = this.state.book;
+        const {onSelect, book} = this.props
         return (
             <li>
                 <div className="book">
@@ -23,10 +20,10 @@ class CardBook extends Component {
                         <div className="book-cover" style={{
                             width: 128,
                             height: 192,
-                            backgroundImage: `url(${imageLinks.smallThumbnail})`
+                            backgroundImage: `url(${imageLinks && imageLinks.thumbnail})`
                         }}></div>
                         <div className="book-shelf-changer">
-                            <select value={shelf} onChange={(e) => this.onSelect(this.props.book, e)}>
+                            <select value={shelf} onChange={(e) => onSelect(book, e)}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>

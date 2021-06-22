@@ -3,6 +3,7 @@ import './App.css'
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Home from "./Home";
 import Search from "./Search";
+import NoMatch from "./NoMatch";
 
 class BooksApp extends React.Component {
     render() {
@@ -11,7 +12,8 @@ class BooksApp extends React.Component {
                 <BrowserRouter>
                     <Switch>
                         <Route exact path='/' component={Home}/>
-                        <Route exact path='/Search' component={Search}/>
+                        <Route path='/Search' component={Search}/>
+                        <Route path='*' component={NoMatch}/>
                     </Switch>
                 </BrowserRouter>
             </div>
