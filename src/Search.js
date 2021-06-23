@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {search} from "./BooksAPI";
+import {search, update} from "./BooksAPI";
 import CardBook from "./Components/CardBook";
 
 class Search extends Component {
@@ -13,11 +13,12 @@ class Search extends Component {
                 if (results.error) {
                     this.setState({error: true, results: []})
                 } else this.setState({error: false, results})
-                console.log(results)
             })
         else this.setState({results: [], error: false});
     }
-
+    onSelect = (book, {target}) => {
+        update(book, target.value).then(response => console.log(response))
+    }
     render() {
         const {history} = this.props;
         const {results, error} = this.state;
@@ -35,6 +36,7 @@ class Search extends Component {
                         {results.map(item =>
                             <CardBook
                                 key={item.id}
+                                onSelect={this.onSelect}
                                 book={item}
                             />
                         )}

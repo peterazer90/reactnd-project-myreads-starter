@@ -12,7 +12,9 @@ class Home extends Component {
     }
 
     onSelect = (book, {target}) => {
-        update(book, target.value).then(response => console.log(response))
+        update(book, target.value).then(() => getAll()
+            .then(books => this.setState({books}))
+        )
     }
 
     render() {
